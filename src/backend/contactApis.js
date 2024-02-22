@@ -11,19 +11,19 @@ export const getContactList = (token, pageSize, pageIndex) => {
   );
 };
 
-export const createContact = (data) => {
+export const createContact = (data, token) => {
   return axios.post(`${contactAPIs.createContact}`, data, {
     headers: { ...headers, Authorization: token },
   });
 };
 
-export const updateContact = (data, id) => {
+export const updateContact = (data, id, token) => {
   return axios.put(`${contactAPIs.updateContact}/${id}`, data, {
     headers: { ...headers, Authorization: token },
   });
 };
 
-export const deleteContact = (id) => {
+export const deleteContact = (id, token) => {
   return axios.delete(`${contactAPIs.deleteContact}/${id}`, {
     headers: { ...headers, Authorization: token },
   });
