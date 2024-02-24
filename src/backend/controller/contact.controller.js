@@ -10,7 +10,8 @@ export const getContacts = (
   pageIndex,
   contact,
   errorData,
-  loading, token
+  loading,
+  token
 ) => {
   getContactList(token, pageSize, pageIndex)
     .then((res) => {
@@ -26,19 +27,24 @@ export const getContacts = (
     });
 };
 
-export const createNewContact = (data, newContact, loading, setError, token) => {
-  createContact(data)
+export const createNewContact = (
+  data,
+  newContact,
+  isCreated,
+  setError,
+  token
+) => {
+  createContact(data, token)
     .then((response) => {
       console.log(response.data);
-      newContact(response.data);
+      newContact(response.data.payload);
+      isCreated(true);
     })
     .catch((error) => {
       console.log(error.response.data);
       setError(error.response.data);
     })
-    .finally(() => {
-      loading(false);
-    });
+    .finally(() => {});
 };
 
 export const updateAContact = (
@@ -46,9 +52,10 @@ export const updateAContact = (
   data,
   updatedContact,
   isUpdated,
-  setError
+  setError,
+  token
 ) => {
-  updateContact(data, id)
+  updateContact(data, id, token)
     .then((response) => {
       console.log("created data", response.data);
       updatedContact(response.data.payload);
@@ -61,8 +68,8 @@ export const updateAContact = (
     .finally(() => {});
 };
 
-export const deleteAContact = (id, dispatch) => {
-  deleteContact(id)
+export const deleteAContact = (id, dispatch, token) => {
+  deleteContact(id, token)
     .then((response) => {
       dispatch(id);
     })

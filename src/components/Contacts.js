@@ -8,7 +8,7 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { IconButton, Modal } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteAContact } from "../backend/controller/contact.controller";
 import { removeContact } from "../redux/reducer/contactSlice";
 import { UpdateContactForm } from "./addContactForm";
@@ -21,17 +21,13 @@ export default function Contact({
   email = "example@email.com",
   address = {},
 }) {
+  const token = useSelector((state) => state.user.accessToken);
   const [openUpdateModal, setOpenUpdateModal] = React.useState(false);
   const dispatch = useDispatch();
   const handleDelete = () => {
-    // onDelete(id); // Pass the contact ID to the onDelete callback
-    deleteAContact(CId, (id) => dispatch(removeContact(id)));
+    deleteAContact(CId, (id) => dispatch(removeContact(id)), token);
   };
-  const handleUpdate = () => {
-    // onDelete(id); // Pass the contact ID to the onDelete callback
-    // deleteAContact(CId, (id) => dispatch(removeContact(id)));
-    console.log({ CId, name, phoneNumber, email, address });
-  };
+
   return (
     <>
       <List

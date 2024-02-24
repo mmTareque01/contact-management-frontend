@@ -1,4 +1,4 @@
-const BASE = "http://127.0.0.1:8000/"
+const BASE = "https://mmtareque.pythonanywhere.com/"
 
 export const contactAPIs = {
     getContact : `${BASE}contact/list`,

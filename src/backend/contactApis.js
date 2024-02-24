@@ -7,24 +7,24 @@ const headers = {
 export const getContactList = (token, pageSize, pageIndex) => {
   return axios.get(
     `${contactAPIs.getContact}?pageSize=${pageSize}&pageIndex=${pageIndex}`,
-    { headers: { ...headers, Authorization: token } }
+    { headers: { ...headers, Authorization: `Bearer ${token}` } }
   );
 };
 
 export const createContact = (data, token) => {
   return axios.post(`${contactAPIs.createContact}`, data, {
-    headers: { ...headers, Authorization: token },
+    headers: { ...headers, Authorization: `Bearer ${token}` },
   });
 };
 
 export const updateContact = (data, id, token) => {
   return axios.put(`${contactAPIs.updateContact}/${id}`, data, {
-    headers: { ...headers, Authorization: token },
+    headers: { ...headers, Authorization: `Bearer ${token}` },
   });
 };
 
 export const deleteContact = (id, token) => {
   return axios.delete(`${contactAPIs.deleteContact}/${id}`, {
-    headers: { ...headers, Authorization: token },
+    headers: { ...headers, Authorization: `Bearer ${token}` },
   });
 };

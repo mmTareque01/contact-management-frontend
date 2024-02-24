@@ -34,11 +34,12 @@ function ContactBook() {
   const contacts = useSelector((state) => state.contacts.list);
   const token = useSelector((state) => state.user.accessToken);
 
+  console.log(token)
+
   const classes = useStyles();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(true);
   const [openModal, setOpenModal] = useState(false);
-  const [openUpdateModal, setOpenUpdateModal] = useState(false);
 
   const handleEdit = (id) => {
     // Implement edit functionality
@@ -52,10 +53,7 @@ function ContactBook() {
     );
   };
 
-  const handleAddContact = () => {
-    // Implement add contact functionality
-    console.log("Adding a new contact");
-  };
+ 
 
   React.useEffect(() => {
     getContacts(

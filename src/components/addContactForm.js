@@ -5,7 +5,7 @@ import {
   createNewContact,
   updateAContact,
 } from "../backend/controller/contact.controller";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addContact, updateContact } from "../redux/reducer/contactSlice";
 import { editContact } from "../redux/reducer/contactSlice";
 import ErrorMessage from "./errorMessage";
@@ -30,7 +30,7 @@ export const ContactForm = ({ closeModal }) => {
   const classes = useStyles();
   const [isCreated, setIsCreated] = useState(false);
   const [error, setError] = useState({});
-
+  const token = useSelector((state) => state.user.accessToken);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -67,7 +67,7 @@ export const ContactForm = ({ closeModal }) => {
       },
       (data) => dispatch(addContact(data)),
       setIsCreated,
-      setError
+      setError, token
     );
     //
   };
@@ -199,6 +199,8 @@ export const ContactForm = ({ closeModal }) => {
 export const UpdateContactForm = ({ closeModal, initialContact }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
+  const token = useSelector((state) => state.user.accessToken);
+
   const [isUpdated, setIsUpdated] = useState(false);
   const [error, setError] = useState({});
   const [formData, setFormData] = useState({
@@ -213,7 +215,6 @@ export const UpdateContactForm = ({ closeModal, initialContact }) => {
   });
 
   useEffect(() => {
-    // Set initial contact data when the component mounts
     if (initialContact) {
       setFormData({
         CId: initialContact.CId,
@@ -240,11 +241,9 @@ export const UpdateContactForm = ({ closeModal, initialContact }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Update the contact using the backend controller
     updateAContact(
       formData.CId,
       {
-        id: initialContact.id, // assuming the contact has an ID
         name: formData.name,
         email: formData.email,
         phoneNumber: formData.phone,
@@ -263,7 +262,7 @@ export const UpdateContactForm = ({ closeModal, initialContact }) => {
         closeModal();
       },
       setIsUpdated,
-      setError
+      setError, token
     );
   };
 
